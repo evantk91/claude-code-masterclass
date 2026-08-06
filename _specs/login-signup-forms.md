@@ -25,6 +25,10 @@ No authentication backend exists yet and none is in scope here. On submit, the f
 - The toggle icon reflects current state — one icon when the password is hidden, a different one when it is visible.
 - The form renders a single submit button whose label depends on mode: "Log In" for login, "Sign Up" for signup.
 - On submit, the form prevents the default browser page-reload submission and logs the current email and password values to the console. Nothing else happens.
+- No client-side validation. Fields are not marked `required`, empty values do not block submission, and invalid email formats are not surfaced to the user. The `--color-error` token stays unused by this feature.
+- No confirm-password field on the signup form. Both modes render exactly two inputs.
+- No loading, disabled, or success/error state on the submit button. The button is always enabled and submission is synchronous.
+- No Figma reference. Styling is free-form within the existing theme tokens and shared utility classes in `app/globals.css`.
 - The form renders a cross-link to the opposite page: `/signup` from the login form, `/login` from the signup form, using Next.js `Link`.
 - `/login` renders the component in login mode; `/signup` renders it in signup mode. Both pages keep their existing headings and `center-content` / `page-content` / `form-title` layout wrappers.
 - Styling uses a CSS Module scoped to the component, with `@reference "../../app/globals.css"` at the top so `@apply` can reach the theme tokens — matching how `Navbar.module.css` is written.
@@ -33,7 +37,7 @@ No authentication backend exists yet and none is in scope here. On submit, the f
 
 ## Possible Edge Cases
 
-- Submitting with one or both fields empty — decide whether submission is blocked or logs empty strings.
+- Submitting with one or both fields empty logs whatever is present, including empty strings. This is intentional — submission is never blocked.
 - Password visibility state should reset to hidden when navigating between `/login` and `/signup`, not persist a revealed password across pages.
 - The show/hide toggle sits inside the form and must not itself trigger form submission.
 - Toggling visibility should not clear the field, move the caret to the start, or lose the user's typed value.
@@ -47,6 +51,7 @@ No authentication backend exists yet and none is in scope here. On submit, the f
 - Visiting `/login` shows a heading, an email field, a password field, a visibility toggle, a "Log In" button, and a link to `/signup`.
 - Visiting `/signup` shows a heading, an email field, a password field, a visibility toggle, a "Sign Up" button, and a link to `/login`.
 - Typing into both fields and submitting logs the entered email and password to the console.
+- Submitting with empty fields still logs — nothing blocks or warns.
 - Submitting does not reload the page, navigate away, or issue a network request.
 - The password field is masked on first render.
 - Clicking the visibility toggle reveals the password as plain text; clicking again re-masks it. The typed value is preserved through both.
@@ -58,11 +63,13 @@ No authentication backend exists yet and none is in scope here. On submit, the f
 
 ## Open Questions
 
-- Should empty fields block submission, or is client-side validation entirely out of scope for this UI-only slice? (Spec currently assumes no validation beyond the browser's native `required` behaviour, if any is added at all.)
-- Should invalid email format be surfaced to the user, and if so, inline or on submit? The `--color-error` token exists but is unused so far.
-- Should the signup form include a confirm-password field? The user's description lists only email and password, so this spec assumes not.
-- Should the form show a loading/disabled state on submit? Not meaningful while submission is a console log, but it affects whether the component is designed to accommodate one later.
-- Is there a Figma design for these forms to match, or is styling free-form within the existing theme tokens?
+None outstanding — all resolved and folded into Functional Requirements above:
+
+- Client-side validation — **out of scope.** No blocking on empty fields.
+- Invalid email format surfaced to the user — **no.**
+- Confirm-password field on signup — **no.**
+- Loading/disabled state on submit — **no.**
+- Figma design to match — **no.** Free-form within existing theme tokens.
 
 ## Testing Guidelines
 
@@ -74,3 +81,4 @@ Create a test file at `tests/components/<ComponentName>.test.tsx`, mirroring the
 - The password field is masked on initial render.
 - Clicking the visibility toggle switches the password field to plain text, and clicking again re-masks it.
 - Submitting the form calls `console.log` with the entered email and password — spy on `console.log` and restore it afterwards.
+- Submitting with both fields empty still calls `console.log` and is not blocked.
