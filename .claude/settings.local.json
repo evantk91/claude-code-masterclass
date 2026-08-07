@@ -3,7 +3,8 @@
     "allow": [
       "WebSearch",
       "Bash(git init)",
-      "Bash(git switch:*)"
+      "Bash(git switch:*)",
+      "mcp__context7__query-docs"
     ]
   }
 }
