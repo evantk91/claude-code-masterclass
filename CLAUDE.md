@@ -67,3 +67,7 @@ page (server)  →  LoginForm / SignupForm  →  AuthForm  →  TextField / Pass
 **Code style**: no semicolons, double quotes, 2-space indent, default-exported function components.
 
 **Icons**: `lucide-react` (see the `Clock8` logo mark in the Navbar and splash page).
+
+## Checking Documentation
+
+- **important** When implementing any lib/framework-specific features, ALWAYS check the appropriate lib/framework documentation using the Context7 MCP server before writing any code.
