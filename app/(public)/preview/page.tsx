@@ -1,6 +1,8 @@
 // preview page for newly created UI components
 
 import Skeleton from "@/components/Skeleton"
+import LoginForm from "@/components/LoginForm"
+import SignupForm from "@/components/SignupForm"
 
 export default function PreviewPage() {
   return (
@@ -11,6 +13,16 @@ export default function PreviewPage() {
         <Skeleton />
         <Skeleton />
         <Skeleton />
+      </div>
+      <div className="mt-8 flex flex-col gap-8">
+        <div>
+          <h3>LoginForm</h3>
+          <LoginForm />
+        </div>
+        <div>
+          <h3>SignupForm</h3>
+          <SignupForm />
+        </div>
       </div>
     </div>
   )
