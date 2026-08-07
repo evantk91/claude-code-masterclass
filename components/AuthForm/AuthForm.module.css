@@ -1,0 +1,17 @@
+@reference "../../app/globals.css";
+
+.form {
+  @apply mx-auto mt-6 flex w-full max-w-sm flex-col gap-5 rounded-xl bg-lighter p-8;
+}
+
+.switchMode {
+  @apply text-center text-sm text-body;
+}
+
+.switchMode a {
+  @apply text-primary underline;
+}
+
+.switchMode a:hover {
+  @apply text-secondary;
+}

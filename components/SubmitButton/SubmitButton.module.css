@@ -1,0 +1,6 @@
+@reference "../../app/globals.css";
+
+/* the global .btn is inline-block, so w-full is what stretches it across the form */
+.submit {
+  @apply mt-2 w-full text-center;
+}
