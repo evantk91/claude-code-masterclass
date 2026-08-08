@@ -17,6 +17,5 @@ const firebaseConfig = {
 // Safe to call on every module evaluation: initializeApp returns the existing
 // app when the options deep-equal an already-initialized one.
 const app = initializeApp(firebaseConfig);
-
 export const auth = getAuth(app);
 export const db = getFirestore(app);
