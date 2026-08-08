@@ -1,4 +1,4 @@
-import { getApp, getApps, initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
@@ -14,10 +14,9 @@ const firebaseConfig = {
   appId: "1:394548719849:web:c2fc882ba140dff28f0078",
 };
 
-// Dev hot-reload re-evaluates this module, so reuse the app if it already exists.
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+// Safe to call on every module evaluation: initializeApp returns the existing
+// app when the options deep-equal an already-initialized one.
+const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-
-export default app;
