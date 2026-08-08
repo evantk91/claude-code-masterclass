@@ -4,7 +4,15 @@
       "WebSearch",
       "Bash(git init)",
       "Bash(git switch:*)",
-      "mcp__context7__query-docs"
+      "mcp__context7__query-docs",
+      "Bash(gh pr *)",
+      "Bash(git fetch *)",
+      "mcp__firebase__firebase_read_resources",
+      "mcp__firebase__firebase_get_environment",
+      "Bash(cp .claude/settings.local.json /private/tmp/claude-501/-Users-evangreer-Documents-dev-Claude-Code-Masterclass-starter-project/15a107e5-ff83-4b9c-a003-f642fb690ca2/scratchpad/settings.local.json.bak)",
+      "Bash(git checkout *)",
+      "Bash(git branch *)",
+      "Bash(cp /private/tmp/claude-501/-Users-evangreer-Documents-dev-Claude-Code-Masterclass-starter-project/15a107e5-ff83-4b9c-a003-f642fb690ca2/scratchpad/settings.local.json.bak .claude/settings.local.json)"
     ]
   }
 }
