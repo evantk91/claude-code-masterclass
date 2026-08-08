@@ -2,13 +2,16 @@ import { getApp, getApps, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
+// These values identify the Firebase project to the client; they are not
+// secrets and are meant to ship in browser code. Firestore rules and Auth
+// settings are what actually protect the project.
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  apiKey: "AIzaSyChjQ30a0gmYB9xL_qU5PwXnuOZ_bNsP3M",
+  authDomain: "pocket-heist-website-4a91c.firebaseapp.com",
+  projectId: "pocket-heist-website-4a91c",
+  storageBucket: "pocket-heist-website-4a91c.firebasestorage.app",
+  messagingSenderId: "394548719849",
+  appId: "1:394548719849:web:c2fc882ba140dff28f0078",
 };
 
 // Dev hot-reload re-evaluates this module, so reuse the app if it already exists.
