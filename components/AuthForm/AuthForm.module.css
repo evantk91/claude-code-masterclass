@@ -8,6 +8,10 @@
   @apply text-center text-sm text-error;
 }
 
+.success {
+  @apply text-center text-sm text-success;
+}
+
 .switchMode {
   @apply text-center text-sm text-body;
 }

@@ -14,6 +14,7 @@ type AuthFormProps = {
   switchLabel: string
   onSubmit: (event: FormEvent<HTMLFormElement>) => void
   error?: string | null
+  success?: string | null
   submitting?: boolean
   children: ReactNode
 }
@@ -26,6 +27,7 @@ export default function AuthForm({
   switchLabel,
   onSubmit,
   error,
+  success,
   submitting,
   children,
 }: AuthFormProps) {
@@ -35,6 +37,7 @@ export default function AuthForm({
       {children}
 
       {error && <p className={styles.error} role="alert">{error}</p>}
+      {success && <p className={styles.success} role="status">{success}</p>}
 
       <SubmitButton disabled={submitting}>{submitLabel}</SubmitButton>
 
