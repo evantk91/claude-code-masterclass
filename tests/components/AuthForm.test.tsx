@@ -46,4 +46,28 @@ describe("AuthForm", () => {
 
     expect(handleSubmit).toHaveBeenCalledTimes(1)
   })
+
+  it("shows the error it is given", () => {
+    render(<AuthForm {...shellProps} error="That email is already registered.">{null}</AuthForm>)
+
+    expect(screen.getByRole("alert")).toHaveTextContent("That email is already registered.")
+  })
+
+  it("shows no error by default", () => {
+    render(<AuthForm {...shellProps}>{null}</AuthForm>)
+
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument()
+  })
+
+  it("disables the submit button while submitting", () => {
+    render(<AuthForm {...shellProps} submitting>{null}</AuthForm>)
+
+    expect(screen.getByRole("button", { name: "Log In" })).toBeDisabled()
+  })
+
+  it("leaves the submit button enabled when not submitting", () => {
+    render(<AuthForm {...shellProps}>{null}</AuthForm>)
+
+    expect(screen.getByRole("button", { name: "Log In" })).toBeEnabled()
+  })
 })

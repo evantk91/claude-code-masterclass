@@ -4,3 +4,8 @@
 .submit {
   @apply mt-2 w-full text-center;
 }
+
+/* .btn keeps its hover colour on disabled, so dim the whole button instead */
+.submit:disabled {
+  @apply cursor-not-allowed opacity-60;
+}

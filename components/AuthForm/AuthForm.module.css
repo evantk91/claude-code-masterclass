@@ -4,6 +4,10 @@
   @apply mx-auto mt-6 flex w-full max-w-sm flex-col gap-5 rounded-xl bg-lighter p-8;
 }
 
+.error {
+  @apply text-center text-sm text-error;
+}
+
 .switchMode {
   @apply text-center text-sm text-body;
 }

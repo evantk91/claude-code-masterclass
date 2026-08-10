@@ -31,4 +31,30 @@ describe("SubmitButton", () => {
 
     expect(handleSubmit).toHaveBeenCalledTimes(1)
   })
+
+  it("is enabled unless told otherwise", () => {
+    render(<SubmitButton>Log In</SubmitButton>)
+
+    expect(screen.getByRole("button", { name: "Log In" })).toBeEnabled()
+  })
+
+  it("is disabled when asked to be", () => {
+    render(<SubmitButton disabled>Log In</SubmitButton>)
+
+    expect(screen.getByRole("button", { name: "Log In" })).toBeDisabled()
+  })
+
+  it("cannot submit the surrounding form while disabled", async () => {
+    const user = userEvent.setup()
+    const handleSubmit = vi.fn((event) => event.preventDefault())
+    render(
+      <form onSubmit={handleSubmit}>
+        <SubmitButton disabled>Log In</SubmitButton>
+      </form>,
+    )
+
+    await user.click(screen.getByRole("button", { name: "Log In" }))
+
+    expect(handleSubmit).not.toHaveBeenCalled()
+  })
 })
