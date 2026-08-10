@@ -13,6 +13,8 @@ type AuthFormProps = {
   switchHref: string
   switchLabel: string
   onSubmit: (event: FormEvent<HTMLFormElement>) => void
+  error?: string | null
+  submitting?: boolean
   children: ReactNode
 }
 
@@ -23,6 +25,8 @@ export default function AuthForm({
   switchHref,
   switchLabel,
   onSubmit,
+  error,
+  submitting,
   children,
 }: AuthFormProps) {
   // noValidate keeps the browser from blocking submit on a malformed email
@@ -30,7 +34,9 @@ export default function AuthForm({
     <form className={styles.form} onSubmit={onSubmit} noValidate>
       {children}
 
-      <SubmitButton>{submitLabel}</SubmitButton>
+      {error && <p className={styles.error} role="alert">{error}</p>}
+
+      <SubmitButton disabled={submitting}>{submitLabel}</SubmitButton>
 
       <p className={styles.switchMode}>
         {switchPrompt} <Link href={switchHref}>{switchLabel}</Link>
