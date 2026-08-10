@@ -59,6 +59,18 @@ describe("AuthForm", () => {
     expect(screen.queryByRole("alert")).not.toBeInTheDocument()
   })
 
+  it("shows the success message it is given", () => {
+    render(<AuthForm {...shellProps} success="You're logged in.">{null}</AuthForm>)
+
+    expect(screen.getByRole("status")).toHaveTextContent("You're logged in.")
+  })
+
+  it("shows no success message by default", () => {
+    render(<AuthForm {...shellProps}>{null}</AuthForm>)
+
+    expect(screen.queryByRole("status")).not.toBeInTheDocument()
+  })
+
   it("disables the submit button while submitting", () => {
     render(<AuthForm {...shellProps} submitting>{null}</AuthForm>)
 
