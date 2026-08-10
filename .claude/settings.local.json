@@ -5,6 +5,7 @@
       "Bash(git init)",
       "Bash(git switch:*)",
       "mcp__context7__query-docs",
+      "mcp__context7__resolve-library-id",
       "Bash(gh pr *)",
       "Bash(git fetch *)",
       "mcp__firebase__firebase_read_resources",
