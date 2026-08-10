@@ -1,8 +1,12 @@
 import { render, screen } from "@testing-library/react"
-import { describe, it, expect } from "vitest"
+import { describe, it, expect, vi } from "vitest"
 
 // component imports
 import Navbar from "@/components/Navbar"
+
+// LogoutButton reads auth state, which needs a provider it is tested with
+// separately — the nav only cares that it renders the child, not what it does
+vi.mock("@/components/LogoutButton", () => ({ default: () => null }))
 
 describe("Navbar", () => {
   it("renders the main heading", () => {
