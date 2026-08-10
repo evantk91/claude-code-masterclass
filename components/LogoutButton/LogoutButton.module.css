@@ -1,0 +1,18 @@
+@reference "../../app/globals.css";
+
+.logoutBtn {
+  @apply inline-flex items-center justify-center;
+  @apply w-[127px] h-[38px] rounded-[10px];
+  @apply border border-white bg-transparent;
+  @apply text-base leading-6 tracking-[-0.3125px] text-white;
+  @apply transition-colors;
+}
+
+.logoutBtn:hover {
+  @apply bg-white/10;
+}
+
+/* matches SubmitButton's disabled treatment */
+.logoutBtn:disabled {
+  @apply cursor-not-allowed opacity-60;
+}

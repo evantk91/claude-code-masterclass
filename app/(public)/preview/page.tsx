@@ -3,6 +3,7 @@
 import Skeleton from "@/components/Skeleton"
 import LoginForm from "@/components/LoginForm"
 import SignupForm from "@/components/SignupForm"
+import LogoutButton from "@/components/LogoutButton"
 
 export default function PreviewPage() {
   return (
@@ -22,6 +23,11 @@ export default function PreviewPage() {
         <div>
           <h3>SignupForm</h3>
           <SignupForm />
+        </div>
+        <div>
+          <h3>LogoutButton</h3>
+          {/* only shows while signed in — an empty slot here is it working */}
+          <LogoutButton />
         </div>
       </div>
     </div>
