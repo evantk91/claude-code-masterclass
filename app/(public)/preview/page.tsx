@@ -5,6 +5,7 @@ import LoginForm from "@/components/LoginForm"
 import SignupForm from "@/components/SignupForm"
 import LogoutButton from "@/components/LogoutButton"
 import SplashHero from "@/components/SplashHero"
+import CreateHeistForm from "@/components/CreateHeistForm"
 
 export default function PreviewPage() {
   return (
@@ -33,6 +34,12 @@ export default function PreviewPage() {
           <h3>LogoutButton</h3>
           {/* only shows while signed in — an empty slot here is it working */}
           <LogoutButton />
+        </div>
+        <div>
+          <h3>CreateHeistForm</h3>
+          {/* it fetches the crew for the signed-in user, so this sits on the
+              loader until you preview it while logged in */}
+          <CreateHeistForm />
         </div>
       </div>
     </div>

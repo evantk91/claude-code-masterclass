@@ -1,0 +1,21 @@
+@reference "../../app/globals.css";
+
+.field {
+  @apply flex flex-col gap-2;
+}
+
+.label {
+  @apply text-sm font-medium text-heading;
+}
+
+.control {
+  @apply relative;
+}
+
+.input {
+  @apply w-full min-w-0 rounded-md border border-body/20 bg-light px-3 py-2 text-heading transition-colors;
+}
+
+.input:focus {
+  @apply border-primary outline-none;
+}
