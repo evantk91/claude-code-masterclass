@@ -99,23 +99,21 @@ describe("PublicGuard", () => {
     })
   })
 
-  it("sends a signed-out visitor off the splash page to the login page", async () => {
+  it("shows the splash page to a signed-out visitor", () => {
     pathname.mockReturnValue("/")
 
     renderGuard()
 
-    await waitFor(() => {
-      expect(replace).toHaveBeenCalledWith("/login")
-    })
+    expect(screen.getByText("Log in to Your Account")).toBeInTheDocument()
+    expect(screen.queryByRole("status")).not.toBeInTheDocument()
   })
 
-  it("never renders the splash page in place", () => {
+  it("leaves a signed-out visitor on the splash page", () => {
     pathname.mockReturnValue("/")
 
     renderGuard()
 
-    expect(screen.queryByText("Log in to Your Account")).not.toBeInTheDocument()
-    expect(screen.getByRole("status")).toBeInTheDocument()
+    expect(replace).not.toHaveBeenCalled()
   })
 
   it("waits for the session before deciding where to send a splash visitor", () => {

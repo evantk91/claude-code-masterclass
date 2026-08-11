@@ -4,6 +4,7 @@ import Skeleton from "@/components/Skeleton"
 import LoginForm from "@/components/LoginForm"
 import SignupForm from "@/components/SignupForm"
 import LogoutButton from "@/components/LogoutButton"
+import SplashHero from "@/components/SplashHero"
 
 export default function PreviewPage() {
   return (
@@ -16,6 +17,10 @@ export default function PreviewPage() {
         <Skeleton />
       </div>
       <div className="mt-8 flex flex-col gap-8">
+        <div>
+          <h3>SplashHero</h3>
+          <SplashHero />
+        </div>
         <div>
           <h3>LoginForm</h3>
           <LoginForm />
