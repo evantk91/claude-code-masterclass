@@ -15,5 +15,8 @@
       "Bash(git branch *)",
       "Bash(cp /private/tmp/claude-501/-Users-evangreer-Documents-dev-Claude-Code-Masterclass-starter-project/15a107e5-ff83-4b9c-a003-f642fb690ca2/scratchpad/settings.local.json.bak .claude/settings.local.json)"
     ]
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true
   }
 }
