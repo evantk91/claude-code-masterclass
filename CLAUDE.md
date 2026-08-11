@@ -40,7 +40,7 @@ Plans are saved for later rather than executed immediately at the end of plan mo
 - `app/(public)/` — unauthenticated routes (`/`, `/login`, `/signup`, `/preview`). Layout wraps children in `<main className="public">` with no nav.
 - `app/(dashboard)/` — authenticated routes (`/heists`, `/heists/create`, `/heists/[id]`). Layout renders `<Navbar />` + `<main>`.
 - Both route groups share the root `app/layout.tsx`, which sets metadata and imports `globals.css`.
-- `app/(public)/page.tsx` (the `/` splash page) is intended to redirect based on auth state: logged in → `/heists`, logged out → `/login`. That redirect logic is not yet implemented.
+- `app/(public)/page.tsx` (the `/` splash page) renders a welcome page (`SplashHero`) for signed-out visitors, with a `Register` CTA to `/signup`. `PublicGuard` redirects signed-in visitors on to `/heists`; it no longer redirects signed-out visitors away from `/`.
 - `app/(public)/preview/page.tsx` is a scratch page for previewing newly built UI components in isolation — not part of the user-facing app. Add new components here.
 
 **Components**: Each component lives in its own directory under `components/` with a barrel `index.ts` re-exporting the default (`export { default } from "./Navbar"`), so imports use `@/components/Navbar` rather than reaching into the file. There are **no named exports anywhere in the repo**. The `@/*` alias maps to the repo root.

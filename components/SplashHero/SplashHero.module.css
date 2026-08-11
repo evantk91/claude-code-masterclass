@@ -1,0 +1,139 @@
+@reference "../../app/globals.css";
+
+.hero {
+  @apply grid gap-x-12 gap-y-10 py-10 md:grid-cols-[1.15fr_1fr] md:items-center;
+}
+
+.copy {
+  @apply flex flex-col gap-5;
+  animation: fade-up 0.5s ease-out both;
+}
+
+.eyebrow {
+  @apply inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs tracking-widest text-primary uppercase font-mono;
+}
+
+.statusDot {
+  @apply inline-block h-1.5 w-1.5 rounded-full bg-success;
+}
+
+.tagline {
+  @apply text-lg text-body;
+}
+
+.lead {
+  @apply max-w-lg text-base leading-relaxed;
+}
+
+.actions {
+  @apply mt-2 flex flex-wrap items-center gap-x-6 gap-y-3;
+}
+
+.loginLink {
+  @apply text-sm text-primary underline underline-offset-4;
+}
+
+.loginLink:hover {
+  @apply text-secondary;
+}
+
+/* --- dossier: the signature element, a stamped case file --- */
+
+.dossier {
+  @apply relative mx-auto flex w-full max-w-xs flex-col gap-4 rounded-xl border border-white/10 bg-lighter p-6;
+  transform: rotate(3deg);
+  transition: transform 0.3s ease;
+  animation: fade-in 0.6s ease-out 0.15s both;
+}
+
+.dossier:hover {
+  transform: rotate(0deg) translateY(-2px);
+}
+
+.caseNumber {
+  @apply text-xs tracking-widest text-body uppercase font-mono;
+}
+
+.stamp {
+  @apply flex flex-col items-center gap-2 self-center rounded-lg border-2 border-dashed border-success/50 px-6 py-5 text-success;
+  transform: rotate(-4deg);
+}
+
+.stampIcon {
+  @apply h-9 w-9;
+}
+
+.stamp span {
+  @apply text-xs tracking-[0.2em] uppercase font-mono;
+}
+
+.redactedLines {
+  @apply flex flex-col gap-2;
+}
+
+.redactedLines span {
+  @apply block h-2 rounded-full bg-body/20;
+}
+
+.redactedLines span:nth-child(1) {
+  @apply w-full;
+}
+
+.redactedLines span:nth-child(2) {
+  @apply w-4/5;
+}
+
+.redactedLines span:nth-child(3) {
+  @apply w-3/5;
+}
+
+/* --- capability tags: three concurrent features, not a numbered sequence --- */
+
+.capabilities {
+  @apply grid gap-6 sm:grid-cols-3 md:col-span-2;
+}
+
+.capabilities li {
+  @apply flex flex-col gap-2 rounded-lg border border-white/5 bg-lighter/60 p-5;
+}
+
+.capabilityIcon {
+  @apply text-secondary;
+}
+
+.capabilityLabel {
+  @apply font-bold text-heading;
+}
+
+.capabilities p {
+  @apply text-sm text-body;
+}
+
+/* --- entrance --- */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copy,
+  .dossier {
+    animation: none;
+  }
+}
