@@ -1,0 +1,22 @@
+@reference "../../app/globals.css";
+
+.field {
+  @apply flex flex-col gap-2;
+}
+
+.label {
+  @apply text-sm font-medium text-heading;
+}
+
+.control {
+  @apply relative;
+}
+
+/* resize-y only: a textarea dragged wider than its card breaks the layout */
+.input {
+  @apply w-full min-w-0 resize-y rounded-md border border-body/20 bg-light px-3 py-2 text-heading transition-colors;
+}
+
+.input:focus {
+  @apply border-primary outline-none;
+}

@@ -38,7 +38,7 @@ export interface CreateHeistInput {
   createdAt: FieldValue
   // a real Date rather than a FieldValue: the deadline is 48h past creation,
   // and only a Cloud Function could do that arithmetic server-side
-  deadline: Date
+  deadline: Date // automatically 48 hours from creation
   // nothing has been pulled off yet
   finalStatus: null
 }
