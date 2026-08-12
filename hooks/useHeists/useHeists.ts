@@ -27,12 +27,17 @@ function isPastDeadline(deadline: Date, now: Date): boolean {
   return deadline.getTime() < now.getTime()
 }
 
+export type UseHeistsResult = {
+  heists: Heist[]
+  loading: boolean
+}
+
 // A live view of the heists collection, narrowed to one of three slices.
 // Firestore is asked only for things it can answer with a single-field index —
 // who a heist belongs to, whether it ended. The deadline is left to JS: pairing
 // a range filter with those would need a composite index, and would freeze the
 // current time into the subscription the moment it was opened.
-export default function useHeists(mode: HeistMode): Heist[] {
+export default function useHeists(mode: HeistMode): UseHeistsResult {
   const { user } = useUser()
   const uid = user?.uid
 
@@ -88,5 +93,10 @@ export default function useHeists(mode: HeistMode): Heist[] {
     })
   }, [mode, uid, key])
 
-  return result.key === key ? result.heists : NO_HEISTS
+  // the same staleness guard that decides whether `result` is safe to hand
+  // back doubles as the loading signal — nothing stamped with the key this
+  // render wants has arrived yet
+  const loading = result.key !== key
+
+  return { heists: loading ? NO_HEISTS : result.heists, loading }
 }
