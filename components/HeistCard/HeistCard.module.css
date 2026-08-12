@@ -1,0 +1,49 @@
+@reference "../../app/globals.css";
+
+.card {
+  @apply flex flex-col gap-3 rounded-[10px] border border-white/10 bg-lighter p-5;
+}
+
+.header {
+  @apply flex items-start justify-between gap-2;
+}
+
+.title {
+  @apply line-clamp-2 font-sans text-base leading-6 text-heading;
+}
+
+.title:hover {
+  @apply text-primary;
+}
+
+.title:focus-visible {
+  @apply rounded-sm outline-none ring-2 ring-primary ring-offset-2 ring-offset-lighter;
+}
+
+.clockIcon {
+  @apply size-4 shrink-0 text-primary;
+}
+
+.meta {
+  @apply flex flex-col gap-2;
+}
+
+.metaRow {
+  @apply flex items-center gap-2 text-sm;
+}
+
+.metaIcon {
+  @apply size-3 shrink-0 text-body;
+}
+
+.metaLabel {
+  @apply text-body;
+}
+
+.assignee {
+  @apply truncate text-primary;
+}
+
+.assigner {
+  @apply truncate text-secondary;
+}

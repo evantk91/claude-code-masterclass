@@ -85,12 +85,15 @@ describe("useHeists", () => {
   it("drops heists whose window has already closed in active mode", () => {
     const { result } = renderHook(() => useHeists("active"))
 
+    expect(result.current.loading).toBe(true)
+
     emitSnapshot([
       heistDoc("open", { deadline: { toDate: () => future } }),
       heistDoc("closed", { deadline: { toDate: () => past } }),
     ])
 
-    expect(result.current.map((heist) => heist.id)).toEqual(["open"])
+    expect(result.current.loading).toBe(false)
+    expect(result.current.heists.map((heist) => heist.id)).toEqual(["open"])
   })
 
   it("asks firestore only for the heists you set up in assigned mode", () => {
@@ -108,7 +111,7 @@ describe("useHeists", () => {
       heistDoc("closed", { deadline: { toDate: () => past } }),
     ])
 
-    expect(result.current.map((heist) => heist.id)).toEqual(["open"])
+    expect(result.current.heists.map((heist) => heist.id)).toEqual(["open"])
   })
 
   it("asks firestore only for heists that reached an outcome in expired mode", () => {
@@ -127,7 +130,7 @@ describe("useHeists", () => {
       heistDoc("still-open", { deadline: { toDate: () => future }, finalStatus: "failure" }),
     ])
 
-    expect(result.current.map((heist) => heist.id)).toEqual(["ended"])
+    expect(result.current.heists.map((heist) => heist.id)).toEqual(["ended"])
   })
 
   it("returns expired heists regardless of who they belong to", () => {
@@ -142,7 +145,7 @@ describe("useHeists", () => {
       }),
     ])
 
-    expect(result.current.map((heist) => heist.id)).toEqual(["someone-elses"])
+    expect(result.current.heists.map((heist) => heist.id)).toEqual(["someone-elses"])
   })
 
   it("returns nothing and opens no listener for the uid-scoped modes when signed out", () => {
@@ -151,8 +154,8 @@ describe("useHeists", () => {
     const active = renderHook(() => useHeists("active"))
     const assigned = renderHook(() => useHeists("assigned"))
 
-    expect(active.result.current).toEqual([])
-    expect(assigned.result.current).toEqual([])
+    expect(active.result.current).toEqual({ heists: [], loading: true })
+    expect(assigned.result.current).toEqual({ heists: [], loading: true })
     expect(onSnapshot).not.toHaveBeenCalled()
   })
 
@@ -169,38 +172,39 @@ describe("useHeists", () => {
 
     const active = renderHook(() => useHeists("active"))
     emitSnapshot([heistDoc("on-the-dot", onTheDot)])
-    expect(active.result.current).toEqual([])
+    expect(active.result.current.heists).toEqual([])
 
     onSnapshot.mockClear()
 
     const expired = renderHook(() => useHeists("expired"))
     emitSnapshot([heistDoc("on-the-dot", onTheDot)])
-    expect(expired.result.current).toEqual([])
+    expect(expired.result.current.heists).toEqual([])
   })
 
   it("stops handing back one user's heists the moment someone else signs in", () => {
     const { result, rerender } = renderHook(() => useHeists("active"))
 
     emitSnapshot([heistDoc("ghosts", { deadline: { toDate: () => future } })])
-    expect(result.current.map((heist) => heist.id)).toEqual(["ghosts"])
+    expect(result.current.heists.map((heist) => heist.id)).toEqual(["ghosts"])
 
     // the new listener has not reported yet — the old rows must not stand in
     useUser.mockReturnValue({ user: mole, loading: false })
     rerender()
 
-    expect(result.current).toEqual([])
+    expect(result.current).toEqual({ heists: [], loading: true })
   })
 
   it("clears the heists it was showing once the user signs out", () => {
     const { result, rerender } = renderHook(() => useHeists("active"))
 
     emitSnapshot([heistDoc("ghosts", { deadline: { toDate: () => future } })])
-    expect(result.current).toHaveLength(1)
+    expect(result.current.heists).toHaveLength(1)
+    expect(result.current.loading).toBe(false)
 
     useUser.mockReturnValue({ user: null, loading: false })
     rerender()
 
-    expect(result.current).toEqual([])
+    expect(result.current).toEqual({ heists: [], loading: true })
   })
 
   it("detaches the listener when the caller goes away", () => {

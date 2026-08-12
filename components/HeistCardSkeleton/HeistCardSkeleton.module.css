@@ -1,0 +1,45 @@
+@reference "../../app/globals.css";
+
+.card {
+  @apply flex animate-pulse flex-col gap-3 rounded-[10px] border border-white/10 bg-lighter p-5;
+}
+
+.header {
+  @apply flex items-start justify-between gap-2;
+}
+
+.titleLines {
+  @apply flex flex-1 flex-col gap-2;
+}
+
+.clock {
+  @apply size-4 shrink-0 rounded-full bg-body/15;
+}
+
+.meta {
+  @apply flex flex-col gap-2;
+}
+
+.metaRow {
+  @apply flex items-center gap-2;
+}
+
+.metaIcon {
+  @apply size-3 shrink-0 rounded-full bg-body/15;
+}
+
+.line {
+  @apply h-4 rounded-md bg-body/15;
+}
+
+.lineShort {
+  @apply w-3/5;
+}
+
+.lineMeta {
+  @apply h-3.5 w-32;
+}
+
+.lineMetaWide {
+  @apply h-3.5 w-40;
+}

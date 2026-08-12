@@ -7,6 +7,12 @@ import HeistsDashboard from "@/components/HeistsDashboard"
 const { useHeists } = vi.hoisted(() => ({ useHeists: vi.fn() }))
 
 vi.mock("@/hooks/useHeists", () => ({ default: useHeists }))
+vi.mock("@/components/HeistCard", () => ({
+  default: ({ heist }: { heist: { id: string } }) => <div data-testid={`card-${heist.id}`} />,
+}))
+vi.mock("@/components/HeistCardSkeleton", () => ({
+  default: () => <div data-testid="card-skeleton" />,
+}))
 
 const deadline = new Date("2026-08-12T12:00:00.000Z")
 
@@ -14,20 +20,23 @@ function heist(id: string, title: string) {
   return { id, title, deadline }
 }
 
-const heistsByMode: Record<string, ReturnType<typeof heist>[]> = {
-  active: [heist("a1", "Liberate the good stapler")],
-  assigned: [heist("s1", "Rename the shared printer"), heist("s2", "Hide the mouse pad")],
-  expired: [heist("e1", "Swap the coffee for decaf")],
+const heistsByMode: Record<string, { heists: ReturnType<typeof heist>[]; loading: boolean }> = {
+  active: { heists: [heist("a1", "Liberate the good stapler")], loading: false },
+  assigned: {
+    heists: [heist("s1", "Rename the shared printer"), heist("s2", "Hide the mouse pad")],
+    loading: false,
+  },
+  expired: { heists: [heist("e1", "Swap the coffee for decaf")], loading: false },
 }
 
-// the section each heading belongs to, so titles can be checked in place
+// the section each heading belongs to, so cards can be checked in place
 function sectionFor(name: string) {
   return screen.getByRole("heading", { name }).closest("div") as HTMLElement
 }
 
 describe("HeistsDashboard", () => {
   beforeEach(() => {
-    useHeists.mockImplementation((mode: string) => heistsByMode[mode] ?? [])
+    useHeists.mockImplementation((mode: string) => heistsByMode[mode] ?? { heists: [], loading: false })
   })
 
   afterEach(() => {
@@ -47,8 +56,7 @@ describe("HeistsDashboard", () => {
 
     const section = sectionFor("Your Active Heists")
 
-    expect(within(section).getByText("Liberate the good stapler")).toBeInTheDocument()
-    expect(within(section).getAllByRole("listitem")).toHaveLength(1)
+    expect(within(section).getByTestId("card-a1")).toBeInTheDocument()
   })
 
   it("lists the assigned heists under their own heading", () => {
@@ -56,9 +64,8 @@ describe("HeistsDashboard", () => {
 
     const section = sectionFor("Heists You've Assigned")
 
-    expect(within(section).getByText("Rename the shared printer")).toBeInTheDocument()
-    expect(within(section).getByText("Hide the mouse pad")).toBeInTheDocument()
-    expect(within(section).getAllByRole("listitem")).toHaveLength(2)
+    expect(within(section).getByTestId("card-s1")).toBeInTheDocument()
+    expect(within(section).getByTestId("card-s2")).toBeInTheDocument()
   })
 
   it("lists the expired heists under their own heading", () => {
@@ -75,12 +82,44 @@ describe("HeistsDashboard", () => {
 
     const active = sectionFor("Your Active Heists")
 
-    expect(within(active).queryByText("Rename the shared printer")).not.toBeInTheDocument()
+    expect(within(active).queryByTestId("card-s1")).not.toBeInTheDocument()
     expect(within(active).queryByText("Swap the coffee for decaf")).not.toBeInTheDocument()
   })
 
+  it("never renders expired heists as cards", () => {
+    render(<HeistsDashboard />)
+
+    expect(screen.queryByTestId("card-e1")).not.toBeInTheDocument()
+  })
+
+  it("shows skeleton placeholders while a mode is loading", () => {
+    useHeists.mockImplementation((mode: string) =>
+      mode === "active" ? { heists: [], loading: true } : (heistsByMode[mode] ?? { heists: [], loading: false }),
+    )
+
+    render(<HeistsDashboard />)
+
+    const section = sectionFor("Your Active Heists")
+
+    expect(within(section).getAllByTestId("card-skeleton")).toHaveLength(3)
+    expect(within(section).queryByTestId(/^card-(?!skeleton)/)).not.toBeInTheDocument()
+  })
+
+  it("shows neither cards nor skeletons when a mode is genuinely empty", () => {
+    useHeists.mockImplementation((mode: string) =>
+      mode === "active" ? { heists: [], loading: false } : (heistsByMode[mode] ?? { heists: [], loading: false }),
+    )
+
+    render(<HeistsDashboard />)
+
+    const section = sectionFor("Your Active Heists")
+
+    expect(within(section).queryAllByTestId("card-skeleton")).toHaveLength(0)
+    expect(within(section).queryByTestId(/^card-/)).not.toBeInTheDocument()
+  })
+
   it("keeps the headings up with nothing to show under them", () => {
-    useHeists.mockReturnValue([])
+    useHeists.mockReturnValue({ heists: [], loading: false })
 
     render(<HeistsDashboard />)
 
