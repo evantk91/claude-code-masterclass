@@ -1,7 +1,14 @@
 import type { DocumentData, FieldValue, QueryDocumentSnapshot } from "firebase/firestore"
 
-// how a heist ended — null until it has
-export type HeistOutcome = "success" | "failure"
+// how a heist ended — null until it has. Kept as an array so a query can ask
+// firestore for the resolved heists by value; the type follows from it
+export const HEIST_OUTCOMES = ["success", "failure"] as const
+
+export type HeistOutcome = (typeof HEIST_OUTCOMES)[number]
+
+// which slice of the collection a reader wants: the jobs pinned on you, the
+// ones you pinned on someone else, or everything whose window has closed
+export type HeistMode = "active" | "assigned" | "expired"
 
 // every heist gets the same window to be pulled off in
 export const HEIST_WINDOW_MS = 48 * 60 * 60 * 1000
