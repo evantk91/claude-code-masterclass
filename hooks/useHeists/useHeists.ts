@@ -73,8 +73,10 @@ export default function useHeists(mode: HeistMode): Heist[] {
       // who a heist belongs to and whether it ended are settled by the query
       // above; all that is left to judge here is which side of now it falls on
       const matches = snapshot.docs
-        // mapped by hand rather than through withConverter: the house converters
-        // take a Partial in toFirestore, which firestore's generics reject
+        // mapped by hand rather than through withConverter: toFirestore takes a
+        // Partial<Heist>, and that is the type withConverter infers for the whole
+        // collection — so data() would hand back every field optional. It compiles;
+        // it just quietly stops being a Heist. Calling fromFirestore keeps the type
         .map((entry) => heistConverter.fromFirestore(entry))
         .filter((heist) =>
           mode === "expired"
