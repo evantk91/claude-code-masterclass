@@ -8,6 +8,8 @@ import SplashHero from "@/components/SplashHero"
 import CreateHeistForm from "@/components/CreateHeistForm"
 import HeistCard from "@/components/HeistCard"
 import HeistCardSkeleton from "@/components/HeistCardSkeleton"
+import ExpiredHeistCard from "@/components/ExpiredHeistCard"
+import ExpiredHeistCardSkeleton from "@/components/ExpiredHeistCardSkeleton"
 
 // types
 import type { Heist } from "@/types/firestore/heist"
@@ -23,6 +25,22 @@ const sampleHeist: Heist = {
   createdAt: new Date(),
   deadline: new Date(Date.now() + 6 * 60 * 60 * 1000),
   finalStatus: null,
+}
+
+const successHeist: Heist = {
+  ...sampleHeist,
+  id: "preview-expired-success",
+  title: "Operation Decaf Dawn",
+  deadline: new Date(Date.now() - 6 * 60 * 60 * 1000),
+  finalStatus: "success",
+}
+
+const failureHeist: Heist = {
+  ...sampleHeist,
+  id: "preview-expired-failure",
+  title: "The Stapler Redistribution, foiled at the last second by a very alert coworker",
+  deadline: new Date(Date.now() - 20 * 60 * 60 * 1000),
+  finalStatus: "failure",
 }
 
 export default function PreviewPage() {
@@ -64,6 +82,14 @@ export default function PreviewPage() {
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
             <HeistCard heist={sampleHeist} />
             <HeistCardSkeleton />
+          </div>
+        </div>
+        <div>
+          <h3>ExpiredHeistCard</h3>
+          <div className="flex flex-col gap-3">
+            <ExpiredHeistCard heist={successHeist} />
+            <ExpiredHeistCard heist={failureHeist} />
+            <ExpiredHeistCardSkeleton />
           </div>
         </div>
       </div>

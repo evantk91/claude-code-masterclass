@@ -13,6 +13,12 @@ vi.mock("@/components/HeistCard", () => ({
 vi.mock("@/components/HeistCardSkeleton", () => ({
   default: () => <div data-testid="card-skeleton" />,
 }))
+vi.mock("@/components/ExpiredHeistCard", () => ({
+  default: ({ heist }: { heist: { id: string } }) => <div data-testid={`expired-card-${heist.id}`} />,
+}))
+vi.mock("@/components/ExpiredHeistCardSkeleton", () => ({
+  default: () => <div data-testid="expired-card-skeleton" />,
+}))
 
 const deadline = new Date("2026-08-12T12:00:00.000Z")
 
@@ -73,8 +79,7 @@ describe("HeistsDashboard", () => {
 
     const section = sectionFor("All Expired Heists")
 
-    expect(within(section).getByText("Swap the coffee for decaf")).toBeInTheDocument()
-    expect(within(section).getAllByRole("listitem")).toHaveLength(1)
+    expect(within(section).getByTestId("expired-card-e1")).toBeInTheDocument()
   })
 
   it("never spills one slice's heists into another section", () => {
@@ -83,7 +88,7 @@ describe("HeistsDashboard", () => {
     const active = sectionFor("Your Active Heists")
 
     expect(within(active).queryByTestId("card-s1")).not.toBeInTheDocument()
-    expect(within(active).queryByText("Swap the coffee for decaf")).not.toBeInTheDocument()
+    expect(within(active).queryByTestId("expired-card-e1")).not.toBeInTheDocument()
   })
 
   it("never renders expired heists as cards", () => {
@@ -103,6 +108,19 @@ describe("HeistsDashboard", () => {
 
     expect(within(section).getAllByTestId("card-skeleton")).toHaveLength(3)
     expect(within(section).queryByTestId(/^card-(?!skeleton)/)).not.toBeInTheDocument()
+  })
+
+  it("shows skeleton placeholders while expired heists are loading", () => {
+    useHeists.mockImplementation((mode: string) =>
+      mode === "expired" ? { heists: [], loading: true } : (heistsByMode[mode] ?? { heists: [], loading: false }),
+    )
+
+    render(<HeistsDashboard />)
+
+    const section = sectionFor("All Expired Heists")
+
+    expect(within(section).getAllByTestId("expired-card-skeleton")).toHaveLength(3)
+    expect(within(section).queryByTestId(/^expired-card-(?!skeleton)/)).not.toBeInTheDocument()
   })
 
   it("shows neither cards nor skeletons when a mode is genuinely empty", () => {

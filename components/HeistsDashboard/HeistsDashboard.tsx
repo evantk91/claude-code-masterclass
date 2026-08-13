@@ -6,16 +6,23 @@ import useHeists from "@/hooks/useHeists"
 // components
 import HeistCard from "@/components/HeistCard"
 import HeistCardSkeleton from "@/components/HeistCardSkeleton"
+import ExpiredHeistCard from "@/components/ExpiredHeistCard"
+import ExpiredHeistCardSkeleton from "@/components/ExpiredHeistCardSkeleton"
 
-// fills the grid while a mode is still loading — matches the column count
-// at the md+ breakpoint
+// number of skeleton placeholders shown per section while its mode is
+// loading — for the active/assigned grids this matches the column count at
+// the md+ breakpoint; for the expired stack it's just a reasonable fill count
 const SKELETON_COUNT = 3
 const HEIST_GRID_CLASSES = "grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3"
+// expired rows are full-width, not grid cells, so they stack instead. mt-3
+// matches the row-to-row gap, so the heading sits at the same rhythm as the
+// rows below it
+const EXPIRED_STACK_CLASSES = "mt-3 flex flex-col gap-3"
 
 export default function HeistsDashboard() {
   const active = useHeists("active")
   const assigned = useHeists("assigned")
-  const expiredHeists = useHeists("expired").heists
+  const expired = useHeists("expired")
 
   return (
     <div className="page-content">
@@ -37,11 +44,11 @@ export default function HeistsDashboard() {
       </div>
       <div className="expired-heists">
         <h2>All Expired Heists</h2>
-        <ul>
-          {expiredHeists.map((heist) => (
-            <li key={heist.id}>{heist.title}</li>
-          ))}
-        </ul>
+        <div className={EXPIRED_STACK_CLASSES}>
+          {expired.loading
+            ? Array.from({ length: SKELETON_COUNT }, (_, index) => <ExpiredHeistCardSkeleton key={index} />)
+            : expired.heists.map((heist) => <ExpiredHeistCard key={heist.id} heist={heist} />)}
+        </div>
       </div>
     </div>
   )

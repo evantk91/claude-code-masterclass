@@ -1,0 +1,49 @@
+@reference "../../app/globals.css";
+
+.row {
+  @apply flex animate-pulse flex-col gap-2 rounded-[10px] border border-white/5 bg-lighter/50 p-[17px];
+}
+
+.header {
+  @apply flex flex-wrap items-center justify-between gap-2;
+}
+
+.titleGroup {
+  @apply flex min-w-0 items-center gap-2;
+}
+
+.statusIcon {
+  @apply size-4 shrink-0 rounded-full bg-body/15;
+}
+
+.titleLine {
+  @apply h-4 w-2/5 rounded-md bg-body/15;
+}
+
+.headerRight {
+  @apply flex shrink-0 items-center gap-3;
+}
+
+.deadlineLine {
+  @apply h-3.5 w-24 rounded-md bg-body/15;
+}
+
+.badgeBlock {
+  @apply h-5 w-16 rounded-[4px] bg-body/15;
+}
+
+.meta {
+  @apply flex flex-col gap-2;
+}
+
+.metaRow {
+  @apply flex items-center gap-2;
+}
+
+.metaIcon {
+  @apply size-3 shrink-0 rounded-full bg-body/15;
+}
+
+.metaLine {
+  @apply h-3.5 w-32 rounded-md bg-body/15;
+}

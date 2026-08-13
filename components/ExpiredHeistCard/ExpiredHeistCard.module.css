@@ -1,0 +1,77 @@
+@reference "../../app/globals.css";
+
+.row {
+  @apply flex flex-col gap-2 rounded-[10px] border border-white/5 bg-lighter/50 p-[17px];
+}
+
+.header {
+  @apply flex flex-wrap items-center justify-between gap-2;
+}
+
+.titleGroup {
+  @apply flex min-w-0 items-center gap-2;
+}
+
+.statusIconSuccess {
+  @apply size-4 shrink-0 text-success;
+}
+
+.statusIconFailure {
+  @apply size-4 shrink-0 text-error;
+}
+
+.title {
+  @apply truncate font-sans text-base leading-6 text-heading;
+}
+
+.title:hover {
+  @apply text-primary;
+}
+
+.title:focus-visible {
+  @apply rounded-sm outline-none ring-2 ring-primary ring-offset-2 ring-offset-lighter;
+}
+
+.headerRight {
+  @apply flex shrink-0 items-center gap-3;
+}
+
+.deadline {
+  @apply flex items-center gap-2 text-sm text-body;
+}
+
+.metaIcon {
+  @apply size-3 shrink-0 text-body;
+}
+
+.badge {
+  @apply rounded-[4px] border px-2 py-0.5 text-xs tracking-[0.6px] uppercase;
+}
+
+.badgeSuccess {
+  @apply border-success/20 bg-success/5 text-success;
+}
+
+.badgeFailure {
+  @apply border-error/20 bg-error/5 text-error;
+}
+
+.meta {
+  @apply flex flex-col gap-2;
+}
+
+.metaRow {
+  @apply flex items-center gap-2 text-sm;
+}
+
+.metaLabel {
+  @apply text-body;
+}
+
+.assignee {
+  @apply truncate text-primary;
+}
+
+.assigner {
+  @apply truncate text-secondary;
+}
