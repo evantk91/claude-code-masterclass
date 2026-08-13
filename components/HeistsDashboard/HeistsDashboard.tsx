@@ -14,8 +14,10 @@ import ExpiredHeistCardSkeleton from "@/components/ExpiredHeistCardSkeleton"
 // the md+ breakpoint; for the expired stack it's just a reasonable fill count
 const SKELETON_COUNT = 3
 const HEIST_GRID_CLASSES = "grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3"
-// expired rows are full-width, not grid cells, so they stack instead
-const EXPIRED_STACK_CLASSES = "flex flex-col gap-3"
+// expired rows are full-width, not grid cells, so they stack instead. mt-3
+// matches the row-to-row gap, so the heading sits at the same rhythm as the
+// rows below it
+const EXPIRED_STACK_CLASSES = "mt-3 flex flex-col gap-3"
 
 export default function HeistsDashboard() {
   const active = useHeists("active")
