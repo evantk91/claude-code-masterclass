@@ -9,8 +9,9 @@ import HeistCardSkeleton from "@/components/HeistCardSkeleton"
 import ExpiredHeistCard from "@/components/ExpiredHeistCard"
 import ExpiredHeistCardSkeleton from "@/components/ExpiredHeistCardSkeleton"
 
-// fills the grid while a mode is still loading — matches the column count
-// at the md+ breakpoint
+// number of skeleton placeholders shown per section while its mode is
+// loading — for the active/assigned grids this matches the column count at
+// the md+ breakpoint; for the expired stack it's just a reasonable fill count
 const SKELETON_COUNT = 3
 const HEIST_GRID_CLASSES = "grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3"
 // expired rows are full-width, not grid cells, so they stack instead
