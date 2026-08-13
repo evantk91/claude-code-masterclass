@@ -13,7 +13,12 @@
       "Bash(cp .claude/settings.local.json /private/tmp/claude-501/-Users-evangreer-Documents-dev-Claude-Code-Masterclass-starter-project/15a107e5-ff83-4b9c-a003-f642fb690ca2/scratchpad/settings.local.json.bak)",
       "Bash(git checkout *)",
       "Bash(git branch *)",
-      "Bash(cp /private/tmp/claude-501/-Users-evangreer-Documents-dev-Claude-Code-Masterclass-starter-project/15a107e5-ff83-4b9c-a003-f642fb690ca2/scratchpad/settings.local.json.bak .claude/settings.local.json)"
+      "Bash(cp /private/tmp/claude-501/-Users-evangreer-Documents-dev-Claude-Code-Masterclass-starter-project/15a107e5-ff83-4b9c-a003-f642fb690ca2/scratchpad/settings.local.json.bak .claude/settings.local.json)",
+      "mcp__plugin_figma_figma__get_variable_defs",
+      "mcp__plugin_figma_figma__get_screenshot",
+      "mcp__plugin_figma_figma__get_metadata",
+      "mcp__plugin_figma_figma__get_design_context",
+      "mcp__plugin_figma_figma__get_code_connect_map"
     ]
   },
   "enabledPlugins": {
